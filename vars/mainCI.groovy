@@ -18,8 +18,8 @@
 
     if (env.TAG_NAME ==~ '.*') {
     stage('Build Code') {
-        sh 'docker build -t 976739212096.dkr.ecr.us-east-1.amazonaws.com/expense-${component}:${TAG_NAME}.'
-    print 'OK'
+        sh 'docker build -t 976739212096.dkr.ecr.us-east-1.amazonaws.com/expense-${component}:${TAG_NAME} .'
+        print 'OK'
     }
     stage('Release Software') {
         sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 976739212096.dkr.ecr.us-east-1.amazonaws.com'
