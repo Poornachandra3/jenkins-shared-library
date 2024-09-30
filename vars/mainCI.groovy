@@ -12,18 +12,18 @@
             }
             checkout scmGit(
                     branches: [[name: "${branch_name}"]],
-                    userRemoteConfigs: [[url: "https://github.com/Poornachandra3/expense-${component}"]]
+                    userRemoteConfigs: [[url: "https://github.com/Poornachandra3/roboshop-${component}"]]
             )
         }
 
     if (env.TAG_NAME ==~ '.*') {
     stage('Build Code') {
-        sh 'docker build -t 976739212096.dkr.ecr.us-east-1.amazonaws.com/expense-${component}:${TAG_NAME} .'
+        sh 'docker build -t 976739212096.dkr.ecr.us-east-1.amazonaws.com/roboshop-${component}:${TAG_NAME} .'
         print 'OK'
     }
     stage('Release Software') {
         sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 976739212096.dkr.ecr.us-east-1.amazonaws.com'
-        sh 'docker push 976739212096.dkr.ecr.us-east-1.amazonaws.com/expense-${component}:${TAG_NAME}'
+        sh 'docker push 976739212096.dkr.ecr.us-east-1.amazonaws.com/roboshop-${component}:${TAG_NAME}'
     }
     stage('Deploy to Dev') {
         sh 'aws eks update-kubeconfig --name dev-eks'
